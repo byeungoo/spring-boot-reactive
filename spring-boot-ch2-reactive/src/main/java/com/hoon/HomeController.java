@@ -48,11 +48,13 @@ public class HomeController {
                         .orElseGet(() -> { // 새로 장바구니에 담은 상품이 장바구니에 없을 경우
                             return this.itemRepository.findById(id)
                                     .map(item -> new CartItem(item))
+                                    .log("fetchedItem") //  로그 추가. 리액티브 스트림 시그널 흐름도 모두 함께 출력된다.
                                     .map(cartItem -> {
                                         cart.getCartItems().add(cartItem);
                                         return cart;
                                     });
                         }))
+                .log("cartWithAnotherItem") // 로그 추가
                 .flatMap(cart -> this.cartRepository.save(cart))    // flatMap을 사용해야 Mono<Cart>가 반환된다. 안그러면 Mono<Mono<Cart>>가 반환된다.
                                                                     // flatMap은 이것의 스트림을 다른 크기로 된 저것의 스트림으로 바꾸는 함수형 도구
                 .thenReturn("redirect:/");  // 웹플럭스가 다시 '/' 위치로 리다이렉트
