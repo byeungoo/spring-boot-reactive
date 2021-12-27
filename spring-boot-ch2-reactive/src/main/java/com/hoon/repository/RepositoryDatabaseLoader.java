@@ -14,8 +14,8 @@ public class RepositoryDatabaseLoader {
     @Bean
     CommandLineRunner initialize(BlockingItemRepository repository) {
         return args -> {
-            repository.save(new Item("Alf alarm clock", 19.99));
-            repository.save(new Item("Alf alarm clock", 19.99));
+            repository.save(new Item("Alf alarm clock", "kids clock", 19.99));
+            repository.save(new Item("Smurf TV tray", "kids TV tray", 24.99));
         };
     }
 

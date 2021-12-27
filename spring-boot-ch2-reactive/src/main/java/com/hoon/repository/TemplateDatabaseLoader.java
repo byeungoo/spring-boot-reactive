@@ -17,8 +17,8 @@ public class TemplateDatabaseLoader {
     @Bean
     CommandLineRunner initialize(MongoOperations repository) { // MongoOperations 사용하여 계약과 세부 구현 분리
         return args -> {
-            repository.save(new Item("Alf alarm clock", 19.99));
-            repository.save(new Item("Alf alarm clock", 19.99));
+            repository.save(new Item("Alf alarm clock", "kids clock", 19.99));
+            repository.save(new Item("Smurf TV tray", "kids TV tray", 24.99));
         };
     }
 
