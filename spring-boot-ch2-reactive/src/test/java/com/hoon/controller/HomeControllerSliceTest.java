@@ -15,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@WebFluxTest(HomeController.class)  // 웹 플럭스 슬라이스 테스트를 사용하도록 설정한다,.
+@WebFluxTest(HomeController.class)  // 웹 플럭스 슬라이스 테스트를 사용하도록 설정한다. HomeController에만 국한
 public class HomeControllerSliceTest {
 
     @Autowired
@@ -25,7 +25,7 @@ public class HomeControllerSliceTest {
     InventoryService inventoryService;
 
     /**
-     * 웹플럭스 스라이스 테스트 (4-10)
+     * 웹플럭스 슬라이스 테스트 (4-10)
      */
     @Test
     void homePage() {
