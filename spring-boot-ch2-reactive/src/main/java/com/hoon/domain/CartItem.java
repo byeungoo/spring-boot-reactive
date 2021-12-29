@@ -25,4 +25,8 @@ public class CartItem {
         this.quantity++;
     }
 
+    public void decrement() {
+        this.quantity--;
+    }
+
 }
