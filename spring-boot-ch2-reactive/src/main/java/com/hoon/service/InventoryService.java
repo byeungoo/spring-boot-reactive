@@ -153,4 +153,12 @@ public class InventoryService {
                 .flatMap(cart -> this.cartRepository.save(cart));
     }
 
+    public Flux<Item> getInventory() {
+        return this.itemRepository.findAll();
+    }
+
+    public Mono<Cart> getCart(String cartId) {
+        return this.cartRepository.findById(cartId);
+    }
+
 }

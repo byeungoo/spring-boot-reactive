@@ -49,6 +49,12 @@ class InventoryServiceUnitTest {
         inventoryService = new InventoryService(itemRepository, reactiveFluentMongoOperations, cartRepository); // <4>
     }
 
+    /**
+     * 리액티브 코드를 테스트할 때는 기능뿐만 아니라 리액티브 스트림 시그널도 함께 검사해야한다.
+     * 리액티브 스트림은 onSubscribe, onNext, onError, onComplete를 말한다.
+     * StepVerifier가 구독을하고 값을 확인할 수 있게해준다.
+     * 탑레밸 방식의 테스트 (4-6)
+     */
     @Test
     void addItemToEmptyCartShouldProduceOneCartItem() {
         inventoryService.addItemToCart("My Cart", "item1")
@@ -56,7 +62,7 @@ class InventoryServiceUnitTest {
                 .as(StepVerifier::create)   // 테스트 대상 메소드의 반환 타입인 Mono<Cart>를 리액터 테스트 모듈의 정적 메소드인 StepVerifier.create()에 메소드 레퍼런스로 연결해서
                                             // 테스트 기능을 전담하는 리액터 타입 핸들러를 생성한다.
 
-                .expectNextMatches(cart -> {
+                .expectNextMatches(cart -> {    // 함수와 람다식을 사용하여 결과를 검증한다.
                     assertThat(cart.getCartItems()).extracting(CartItem::getQuantity)
                             .containsExactlyInAnyOrder(1);
 
@@ -65,7 +71,28 @@ class InventoryServiceUnitTest {
 
                     return true;
                 })
-                .verifyComplete();
+                .verifyComplete(); // 리액티브 스트림의 complete 시그널이 발생하고 리액터 플로우가 성공적으로 완료됐음을검증
+    }
+
+    /**
+     * 탑레밸 방식과는 다른 방식으로 작성한 테스트 코드 (4-7)
+     *
+     */
+    @Test
+    void alternativeWayToTest() {
+        StepVerifier.create(
+                inventoryService.addItemToCart("My Cart", "item1"))
+                .expectNextMatches(
+                        cart -> {    // 함수와 람다식을 사용하여 결과를 검증한다.
+                            assertThat(cart.getCartItems()).extracting(CartItem::getQuantity)
+                                    .containsExactlyInAnyOrder(1);
+
+                            assertThat(cart.getCartItems()).extracting(CartItem::getItem)
+                                    .containsExactly(new Item("item1", "TV tray", 19.99));
+
+                            return true;
+                        })
+                        .verifyComplete();
     }
 
 }

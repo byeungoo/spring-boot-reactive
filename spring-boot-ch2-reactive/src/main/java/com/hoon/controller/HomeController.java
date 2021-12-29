@@ -1,4 +1,4 @@
-package com.hoon;
+package com.hoon.controller;
 
 import com.hoon.domain.Cart;
 import com.hoon.domain.CartItem;
