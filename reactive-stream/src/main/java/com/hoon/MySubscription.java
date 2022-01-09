@@ -19,7 +19,7 @@ public class MySubscription implements Subscription {
     }
 
     @Override
-    public void request(long n) {
+    public void request(long n) {   // 갯수를 넣으면됨
         while( n > 0 ) {
             if(it.hasNext()) {
                 subscriber.onNext(it.next());

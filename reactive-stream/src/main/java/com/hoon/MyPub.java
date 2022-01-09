@@ -15,7 +15,7 @@ public class MyPub implements Publisher<Integer> {
         System.out.println("신문사 : 구독 정보를 만들어서 돌려줄테니 기다려!!");
         MySubscription subscription = new MySubscription(subscriber, its);
         System.out.println("신문사 : 구독 정보 생성 완료했어 잘 받아!!");
-        subscriber.onSubscribe(subscription);
+        subscriber.onSubscribe(subscription);   // onSubscribe 필수로 호출 해야함
     }
 
 }
